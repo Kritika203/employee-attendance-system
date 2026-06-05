@@ -8,8 +8,8 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: ['https://employee-attendance-system-wheat.vercel.app', 'http://localhost:5173', 'http://localhost:5174'],
-  credentials: true
+  origin: '*',
+  credentials: false
 }));
 app.use(express.json());
 
