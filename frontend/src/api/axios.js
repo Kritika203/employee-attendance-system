@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://employee-attendance-system-tnhv.onrender.com/api',
+  baseURL: 'https://employee-attendance-system-backend-tnhv.onrender.com/api',
 });
 
 API.interceptors.request.use((req) => {
