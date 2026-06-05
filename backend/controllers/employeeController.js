@@ -26,8 +26,13 @@ exports.addEmployee = async (req, res) => {
     if (!/^[a-zA-Z\s]+$/.test(department))
       return res.status(400).json({ message: 'Department must contain letters only' });
 
-    const count = await Employee.countDocuments();
-    const employeeCode = `EMP${String(count + 1).padStart(3, '0')}`;
+    const lastEmployee = await Employee.findOne().sort({ createdAt: -1 });
+    let nextNumber = 1;
+    if (lastEmployee && lastEmployee.employeeCode) {
+      const lastNumber = parseInt(lastEmployee.employeeCode.replace('EMP', ''));
+      nextNumber = lastNumber + 1;
+    }
+    const employeeCode = `EMP${String(nextNumber).padStart(3, '0')}`;
 
     const employee = new Employee({ name, phone, department, employeeCode });
     await employee.save();
