@@ -1,8 +1,18 @@
 const Attendance = require('../models/Attendance');
+const mongoose = require('mongoose');
 
 exports.markAttendance = async (req, res) => {
   try {
     const { employeeId, date, status } = req.body;
+
+    if (!employeeId || !date || !status)
+      return res.status(400).json({ message: 'employeeId, date and status are required' });
+
+    if (!mongoose.Types.ObjectId.isValid(employeeId))
+      return res.status(400).json({ message: 'Invalid employee ID' });
+
+    if (!['Present', 'Absent'].includes(status))
+      return res.status(400).json({ message: 'Status must be Present or Absent' });
 
     const existing = await Attendance.findOne({ employeeId, date });
     if (existing) {
@@ -25,7 +35,11 @@ exports.getAttendance = async (req, res) => {
     let filter = {};
 
     if (date) filter.date = date;
-    if (employeeId) filter.employeeId = employeeId;
+    if (employeeId) {
+      if (!mongoose.Types.ObjectId.isValid(employeeId))
+        return res.status(400).json({ message: 'Invalid employee ID' });
+      filter.employeeId = employeeId;
+    }
 
     const attendance = await Attendance.find(filter).populate('employeeId', 'name department');
     res.json(attendance);

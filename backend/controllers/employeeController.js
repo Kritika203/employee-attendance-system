@@ -1,4 +1,5 @@
 const Employee = require('../models/Employee');
+const mongoose = require('mongoose');
 
 exports.getEmployees = async (req, res) => {
   try {
@@ -12,6 +13,10 @@ exports.getEmployees = async (req, res) => {
 exports.addEmployee = async (req, res) => {
   try {
     const { name, phone, department } = req.body;
+
+    if (!name || !phone || !department)
+      return res.status(400).json({ message: 'Name, phone and department are required' });
+
     const employee = new Employee({ name, phone, department });
     await employee.save();
     res.status(201).json(employee);
@@ -22,9 +27,14 @@ exports.addEmployee = async (req, res) => {
 
 exports.updateEmployee = async (req, res) => {
   try {
+    const { name, phone, department } = req.body;
+
+    if (!name || !phone || !department)
+      return res.status(400).json({ message: 'Name, phone and department are required' });
+
     const employee = await Employee.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      { name, phone, department },
       { new: true }
     );
     if (!employee) return res.status(404).json({ message: 'Employee not found' });
@@ -36,6 +46,9 @@ exports.updateEmployee = async (req, res) => {
 
 exports.deleteEmployee = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+      return res.status(400).json({ message: 'Invalid employee ID' });
+
     const employee = await Employee.findByIdAndDelete(req.params.id);
     if (!employee) return res.status(404).json({ message: 'Employee not found' });
     res.json({ message: 'Employee deleted' });
