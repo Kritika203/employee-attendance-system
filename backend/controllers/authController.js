@@ -30,13 +30,13 @@ exports.login = async (req, res) => {
 
 exports.employeeLogin = async (req, res) => {
   try {
-    const { employeeId } = req.body;
+    const { employeeCode } = req.body;
 
-    if (!employeeId)
-      return res.status(400).json({ message: 'Employee ID is required' });
+    if (!employeeCode)
+      return res.status(400).json({ message: 'Employee code is required' });
 
-    const employee = await Employee.findById(employeeId);
-    if (!employee) return res.status(400).json({ message: 'Invalid employee ID' });
+    const employee = await Employee.findOne({ employeeCode });
+    if (!employee) return res.status(400).json({ message: 'Invalid employee code' });
 
     const token = jwt.sign(
       { id: employee._id, role: 'employee' },
@@ -44,7 +44,15 @@ exports.employeeLogin = async (req, res) => {
       { expiresIn: '1d' }
     );
 
-    res.json({ token, employee: { id: employee._id, name: employee.name, department: employee.department } });
+    res.json({
+      token,
+      employee: {
+        id: employee._id,
+        name: employee.name,
+        department: employee.department,
+        employeeCode: employee.employeeCode
+      }
+    });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
