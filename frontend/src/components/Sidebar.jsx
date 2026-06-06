@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './Sidebar.css'
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
   const { logout, user } = useAuth()
   const navigate = useNavigate()
 
@@ -12,7 +12,7 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-logo">
         <span className="logo-icon">📅</span>
         <span className="logo-text">AttendSync</span>
@@ -27,22 +27,22 @@ const Sidebar = () => {
       </div>
 
       <nav className="sidebar-nav">
-        <NavLink to="/" end className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
+        <NavLink to="/" end className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'} onClick={onClose}>
           <span className="nav-icon">🏠</span>
           <span>Dashboard</span>
         </NavLink>
-        <NavLink to="/employees" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
+        <NavLink to="/employees" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'} onClick={onClose}>
           <span className="nav-icon">👥</span>
           <span>Employees</span>
         </NavLink>
-        <NavLink to="/attendance" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
+        <NavLink to="/attendance" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'} onClick={onClose}>
           <span className="nav-icon">📅</span>
           <span>Attendance</span>
         </NavLink>
       </nav>
 
       <button className="logout-btn" onClick={handleLogout}>
-        <span>←</span>
+        <span>🚪</span>
         <span>Logout</span>
       </button>
     </aside>

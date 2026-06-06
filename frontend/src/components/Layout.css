@@ -9,3 +9,33 @@
   padding: 32px;
   min-height: 100vh;
 }
+
+.hamburger {
+  display: none;
+  background: none;
+  font-size: 22px;
+  margin-bottom: 16px;
+  color: var(--text);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.hamburger:hover { background: var(--border); }
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 99;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 16px;
+  }
+
+  .hamburger { display: block; }
+  .sidebar-overlay { display: block; }
+}

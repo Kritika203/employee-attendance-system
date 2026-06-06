@@ -133,3 +133,11 @@
 }
 
 .loading { color: var(--text-secondary); padding: 40px 0; }
+
+
+
+@media (max-width: 768px) {
+  .filters { flex-direction: column; }
+  .table-card { overflow-x: auto; }
+  .table { min-width: 500px; }
+}
