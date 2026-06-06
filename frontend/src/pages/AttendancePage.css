@@ -137,6 +137,8 @@
 
 
 @media (max-width: 768px) {
+  .attendance-page { max-width: 100%; }
+  .page-header h1 { font-size: 20px; }
   .filters { flex-direction: column; }
   .table-card { overflow-x: auto; }
   .table { min-width: 500px; }
