@@ -14,7 +14,7 @@ const Sidebar = () => {
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
-        <span className="logo-icon">📋</span>
+        <span className="logo-icon">📅</span>
         <span className="logo-text">AttendSync</span>
       </div>
 

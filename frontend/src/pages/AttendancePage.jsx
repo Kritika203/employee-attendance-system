@@ -26,7 +26,11 @@ const AttendancePage = () => {
     }
   }
 
-  useEffect(() => { fetchData() }, [date, filterEmployee])
+  useEffect(() => {
+  fetchData()
+  const interval = setInterval(fetchData, 30000)
+  return () => clearInterval(interval)
+}, [date, filterEmployee])
 
   const getStatus = (empId) => {
     const record = attendance.find(a => a.employeeId?._id === empId)

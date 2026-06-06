@@ -31,7 +31,7 @@ const LoginPage = () => {
     <div className="login-page">
       <div className="login-card">
         <div className="login-header">
-          <span className="login-logo">📋</span>
+          <span className="login-logo">📅</span>
           <h1>AttendSync</h1>
           <p>Sign in to your admin account</p>
         </div>
