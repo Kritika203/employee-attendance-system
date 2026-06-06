@@ -32,15 +32,18 @@ class ApiService {
     await prefs.clear();
   }
 
-  static Future<Map<String, dynamic>> employeeLogin(String employeeCode) async {
+ static Future<Map<String, dynamic>> employeeLogin(String employeeCode) async {
+  try {
     final res = await http.post(
       Uri.parse('$baseUrl/auth/employee-login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'employeeCode': employeeCode}),
     );
     return jsonDecode(res.body);
+  } catch (e) {
+    rethrow;
   }
-
+}
   static Future<Map<String, dynamic>> markAttendance(String status) async {
     final token = await getToken();
     final employee = await getEmployee();
